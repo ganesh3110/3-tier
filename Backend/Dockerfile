@@ -1,14 +1,20 @@
-FROM centos:07
+FROM centos:7
 
-LABEL Devops ="Ganesh_Nelge"
+LABEL Devops ="Ganesh"
 
-Run yum install httpd -y
-Copy index.html /var/www/html/
-Run chmod 777 -r /var/www/
-Run chmod 644 /var/www/html/index.html
+RUN yum install java-11-openjdk -y
+ADD https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.99/bin/apache-tomcat-8.5.99.tar.gz /opt 
+RUN tar -xzvf /opt/apache-tomcat-8.5.99.tar.gz -C /opt/
+ 
 
-Expose 80
+WORKDIR /opt/apache-tomcat-8.5.99/
+ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar lib/mysql-connector.jar
+COPY student.war webapps/student.war
+COPY context.xml conf/contex.xml
 
 
-CMD httpd -DFOREGROUND
+
+
+EXPOSE 8080
+CMD bin/catalina.sh start
 
