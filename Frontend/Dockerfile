@@ -1,6 +1,6 @@
 FROM centos:07
 
-LABEL Devops ="Anup_Dudhe"
+LABEL Devops ="Ganesh"
 
 Run yum install httpd -y
 Copy index.html /var/www/html/
